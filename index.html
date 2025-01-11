@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Calculus</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Home Screen -->
+    <div id="homeScreen" class="screen active">
+        <div class="home-content">
+            <div class="logo-container">
+                <h1 class="game-logo">Brain Calculus</h1>
+                <p class="game-tagline">Train Your Mind, Master Math</p>
+            </div>
+            
+            <div class="game-features">
+                <div class="feature-card">
+                    <div class="feature-icon">🧮</div>
+                    <h3>Quick Math</h3>
+                    <p>Dynamic challenges to boost your mental math</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Power-Ups</h3>
+                    <p>Special abilities to enhance your gameplay</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏱️</div>
+                    <h3>Time Rush</h3>
+                    <p>Race against time to solve equations</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Leaderboard</h3>
+                    <p>Compete globally for top rankings</p>
+                </div>
+            </div>
+
+            <div class="home-buttons">
+                <button id="startHomeButton" class="primary-button pulse-animation">Play Now</button>
+                <button id="homeLeaderboardButton" class="secondary-button">Top Players</button>
+                <button id="homeThemeToggle" class="secondary-button">🌙 Theme</button>
+            </div>
+
+            <div class="game-stats">
+                <div class="stat-box">
+                    <span class="stat-number" id="totalPlayers">0</span>
+                    <span class="stat-label">Players</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" id="gamesPlayed">0</span>
+                    <span class="stat-label">Games</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" id="highestScore">0</span>
+                    <span class="stat-label">Best Score</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nickname Screen -->
+    <div id="nicknameScreen" class="screen">
+        <div class="nickname-container">
+            <h2>Enter Your Nickname</h2>
+            <input type="text" id="nicknameInput" maxlength="15" placeholder="Your nickname">
+            <div class="nickname-buttons">
+                <button id="backToHome" class="secondary-button">Back</button>
+                <button id="startButton" class="primary-button">Start Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Screen -->
+    <div id="leaderboardScreen" class="screen">
+        <div class="screen-content">
+            <h2>Top 5 Players</h2>
+            <div class="leaderboard-list">
+                <!-- Leaderboard items will be added here -->
+            </div>
+            <button id="closeLeaderboard" class="secondary-button">Back</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="screen">
+        <div class="game-container">
+            <div class="header">
+                <div class="controls">
+                    <button id="pauseButton" class="control-button" aria-label="Pause Game">⏸️ Pause</button>
+                    <button id="soundToggle" class="control-button" aria-label="Toggle Sound">🔊 Sound</button>
+                    <button id="themeToggle" class="control-button" aria-label="Toggle Theme">🌙 Theme</button>
+                    <button id="toggleLeaderboard" class="control-button" aria-label="Toggle Leaderboard">🏆 Top 5</button>
+                </div>
+                <h1>Brain Calculus</h1>
+                <div class="player-info">
+                    <span id="playerNickname"></span>
+                </div>
+            </div>
+            
+            <div class="stats-header">
+                <div class="stat-container">
+                    <span class="stat-label">Level</span>
+                    <span id="level" class="stat-value">1</span>
+                </div>
+                <div class="stat-container">
+                    <span class="stat-label">Score</span>
+                    <span id="score" class="stat-value">0</span>
+                </div>
+                <div class="stat-container">
+                    <span class="stat-label">Time</span>
+                    <span id="timer" class="stat-value">20</span>
+                </div>
+            </div>
+
+            <div class="game-area">
+                <div class="main-game">
+                    <div class="question-container">
+                        <div id="question" class="question">Get Ready...</div>
+                        <div class="options-container">
+                            <button class="option" data-index="0"></button>
+                            <button class="option" data-index="1"></button>
+                            <button class="option" data-index="2"></button>
+                            <button class="option" data-index="3"></button>
+                        </div>
+                    </div>
+
+                    <div class="powerups">
+                        <button id="doublePoints" class="powerup" title="Double Points: 2x score for 30 seconds">2️⃣ 2x Points</button>
+                        <button id="extraTime" class="powerup" title="Extra Time: +10 seconds">⏰ +10s</button>
+                        <button id="shield" class="powerup" title="Error Shield: Protects from one wrong answer">🛡️ Shield</button>
+                        <button id="fiftyFifty" class="powerup" title="50:50: Removes two wrong answers">5️⃣ 50:50</button>
+                    </div>
+
+                    <div class="game-info">
+                        <div class="streak">Streak: <span id="currentStreak">0</span></div>
+                        <div class="high-score">Best: <span id="highScore">0</span></div>
+                    </div>
+                </div>
+
+                <div class="game-leaderboard hidden">
+                    <div class="leaderboard-header">
+                        <h3>Top 5 Players</h3>
+                        <button id="closeGameLeaderboard" class="close-button" aria-label="Close Leaderboard">✖️</button>
+                    </div>
+                    <div class="mini-leaderboard"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pause Menu Dialog -->
+    <div id="pauseDialog" class="dialog">
+        <div class="dialog-content">
+            <h2>Game Paused</h2>
+            <div class="button-container">
+                <button id="resumeGame" class="primary-button">Resume Game</button>
+                <button id="restartCurrentGame" class="secondary-button">Restart Game</button>
+                <button id="supportButton" class="secondary-button">Contact Support</button>
+                <button id="quitToMenu" class="secondary-button">Quit to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Dialog -->
+    <div id="gameOverDialog" class="dialog">
+        <div class="dialog-content">
+            <h2>Game Over!</h2>
+            <div class="stats-container">
+                <p>Player: <span id="finalNickname"></span></p>
+                <p>Final Score: <span id="finalScore">0</span></p>
+                <p>Level Reached: <span id="finalLevel">1</span></p>
+                <p>Questions Solved: <span id="questionsAnswered">0</span></p>
+            </div>
+            <div class="button-container">
+                <button id="watchAdForContinue" class="primary-button">Watch Ad to Continue</button>
+                <button id="restartGame" class="primary-button">Play Again</button>
+                <button id="showLeaderboardAfterGame" class="secondary-button">Top 5 Players</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- In-Game Leaderboard Dialog -->
+    <div id="inGameLeaderboardDialog" class="dialog">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h2>Top 5 Players</h2>
+                <button id="closeInGameLeaderboard" class="close-button" aria-label="Close">✖️</button>
+            </div>
+            <div class="leaderboard-content">
+                <div class="mini-leaderboard"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Dialog -->
+    <div id="supportDialog" class="dialog">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h2>Contact Support</h2>
+                <button id="closeSupportDialog" class="close-button" aria-label="Close">✖️</button>
+            </div>
+            <form id="supportForm" class="support-form">
+                <div class="form-group">
+                    <label for="supportName">Your Name</label>
+                    <input type="text" id="supportName" required>
+                </div>
+                <div class="form-group">
+                    <label for="supportEmail">Your Email</label>
+                    <input type="email" id="supportEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="supportSubject">Subject</label>
+                    <input type="text" id="supportSubject" required>
+                </div>
+                <div class="form-group">
+                    <label for="supportMessage">Message</label>
+                    <textarea id="supportMessage" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="primary-button">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getDatabase, ref, push, set, get, remove } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyALz-Tk2E3vPgOFkVYfihW4Kgkm1kayO5Q",
+            authDomain: "brain-calculus.firebaseapp.com",
+            databaseURL: "https://brain-calculus-default-rtdb.firebaseio.com",
+            projectId: "brain-calculus",
+            storageBucket: "brain-calculus.firebasestorage.app",
+            messagingSenderId: "33048676203",
+            appId: "1:33048676203:web:01510ef5d633af42c12e2e",
+            measurementId: "G-6RXD397KXD"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+
+        // Make Firebase instances and functions available globally
+        window.firebaseApp = app;
+        window.firebaseDatabase = database;
+        window.firebaseFunctions = { ref, push, set, get, remove };
+    </script>
+    
+    <script src="game.js"></script>
+</body>
+</html> 
